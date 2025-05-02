@@ -74,8 +74,12 @@ const Sidebar = () => {
 
     const menuOptions = (
         <>
-            <NewSidebarButton />
-            <div className='flex py-4 flex-col space-y-4 md:max-w-36'>
+            <div className='flex justify-center'>
+                <NewSidebarButton />
+            </div>
+
+            {/* My Documents */}
+            <div className='flex justify-center py-4 flex-col space-y-4 md:max-w-36'>
                 {
                     groupedData?.owner?.length === 0 ? (
                         <h2 className='text-gray-500 font-semibold text-sm'>
@@ -83,7 +87,7 @@ const Sidebar = () => {
                         </h2>
                     ) : (
                         <>
-                            <h2 className='text-gray-500 font-semibold text-sm'>
+                            <h2 className='text-gray-500 font-semibold text-sm text-center'>
                                 My Documents
                             </h2>
                             {
@@ -95,7 +99,23 @@ const Sidebar = () => {
                         </>
                     )
                 }
+                
+                {/* Documents shared with me */}
+                {groupedData?.editor?.length > 0 && (
+                    <>
+                        <h2 className='text-gray-500 font-semibold text-sm'>
+                            Shared with me
+                        </h2>
+                        {
+                            groupedData?.editor?.map((doc) => (
+                                <SidebarOption key={doc.id} id={doc.id} href={`/doc/${doc.id}`} />
+                            ))
+                        }
+                    </>
+                )}
             </div>
+
+
         </>
     )
 
@@ -112,9 +132,7 @@ const Sidebar = () => {
                     <SheetContent side='left'>
                         <SheetHeader>
                             <SheetTitle className="text-center">Menu</SheetTitle>
-                            <div className="flex justify-center">
-                                {menuOptions}
-                            </div>
+                            {menuOptions}
                         </SheetHeader>
                     </SheetContent>
                 </Sheet>
